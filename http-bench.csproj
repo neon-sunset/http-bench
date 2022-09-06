@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net7.0</TargetFramework>
+    <LangVersion>preview</LangVersion>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  
+    <!-- <PublishAot>true</PublishAot> -->
+    <DebuggerSupport>false</DebuggerSupport>
+    <InvariantGlobalization>true</InvariantGlobalization>
+
+    <IlcTrimMetadata>true</IlcTrimMetadata>
+    <IlcOptimizationPreference>Speed</IlcOptimizationPreference>
+    <!-- <ILLinkWarningLevel>999</ILLinkWarningLevel>
+    <ILLinkTreatWarningsAsErrors>true</ILLinkTreatWarningsAsErrors>
+    <IlcInstructionSet>avx2,bmi2,fma,pclmul,popcnt,aes,lzcnt</IlcInstructionSet> -->
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="RangeExtensions" Version="1.2.2" />
+  </ItemGroup>
+
+</Project>
