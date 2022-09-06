@@ -2,7 +2,7 @@
 - Download an executable for your OS from https://github.com/neon-sunset/http-bench/releases
 - Run in console e.g. `http-bench https://example.org -p 64 -t 120`
 
-AOT version has faster startup and smaller binary, JIT has slightly higher sustained throughput.
+AOT version has faster startup and smaller binary, JIT has higher sustained throughput.
 Keep in mind that NativeAOT is currently unsupported on macOS (subject to change).
 
 ### Args
