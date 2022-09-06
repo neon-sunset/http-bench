@@ -5,6 +5,15 @@
 AOT version has faster startup and smaller binary, JIT has slightly higher sustained throughput.
 Keep in mind that NativeAOT is currently unsupported on macOS (subject to change).
 
+### Args
+```sh
+url, target address
+-p {num}, number of parallel workers
+-t {secs}, execution time in seconds
+
+usage: http://address.example -p 64 -t 120
+```
+
 ### Build
 Download SDK from https://dotnet.microsoft.com/en-us/download/dotnet/7.0
 
