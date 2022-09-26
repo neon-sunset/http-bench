@@ -1,5 +1,4 @@
 ﻿using System.Diagnostics;
-using System.Globalization;
 
 if (args.Contains("--help") || args.Length is 0)
 {
@@ -68,11 +67,10 @@ async Task<Report> RunWorker(int i, CancellationToken ct)
 
 T GetArg<T>(string key) where T : IParsable<T>
 {
-    var argsSpan = args.AsSpan();
-    var argIndex = argsSpan.IndexOf(key);
+    var idx = args.AsSpan().IndexOf(key);
 
-    return argIndex > -1
-        ? T.Parse(argsSpan[argIndex + 1], CultureInfo.InvariantCulture)
+    return idx > -1
+        ? T.Parse(args[idx + 1], null)
         : throw new ArgumentException($"Argument {key} was not supplied. Exiting.");
 }
 

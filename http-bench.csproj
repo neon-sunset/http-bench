@@ -8,14 +8,16 @@
     <Nullable>enable</Nullable>
   
     <!-- <PublishAot>true</PublishAot> -->
+    <PublishTrimmed>true</PublishTrimmed>
     <DebuggerSupport>false</DebuggerSupport>
+    <StaticICULinking>true</StaticICULinking>
     <InvariantGlobalization>true</InvariantGlobalization>
+    <EnableCompressionInSingleFile>true</EnableCompressionInSingleFile>
+    <IncludeAllContentForSelfExtract>true</IncludeAllContentForSelfExtract>
 
     <IlcTrimMetadata>true</IlcTrimMetadata>
     <IlcOptimizationPreference>Speed</IlcOptimizationPreference>
-    <!-- <ILLinkWarningLevel>999</ILLinkWarningLevel>
-    <ILLinkTreatWarningsAsErrors>true</ILLinkTreatWarningsAsErrors>
-    <IlcInstructionSet>avx2,bmi2,fma,pclmul,popcnt,aes,lzcnt</IlcInstructionSet> -->
+    <!-- <ILLinkTreatWarningsAsErrors>true</ILLinkTreatWarningsAsErrors> -->
   </PropertyGroup>
 
   <ItemGroup>

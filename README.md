@@ -19,7 +19,7 @@ Download SDK from https://dotnet.microsoft.com/en-us/download/dotnet/7.0
 
 JIT version
 ```sh
-dotnet publish -c release -o publish -p:PublishSingleFile=true -p:PublishTrimmed=true --use-current-runtime --self-contained
+dotnet publish -c release -o publish -p:PublishSingleFile=true --use-current-runtime --self-contained
 ```
 
 AOT version
