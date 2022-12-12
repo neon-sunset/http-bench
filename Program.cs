@@ -21,7 +21,7 @@ using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(executionTime))
 
 var workers = (0..workerCount)
     .AsEnumerable()
-    .Select(i => RunWorker(i, cts.Token));
+    .Select(RunWorker);
 
 // Execute benchmark
 var reports = await Task.WhenAll(workers);
@@ -31,16 +31,18 @@ var aggregated = reports.Aggregate(default(Report), (seed, r) => seed + r);
 // Console.WriteLine(string.Join('\n', reports));
 Console.WriteLine(aggregated);
 
-async Task<Report> RunWorker(int i, CancellationToken ct)
+async Task<Report> RunWorker(int i)
 {
     Console.WriteLine($"Starting worker {i}!");
     var timestamp = Stopwatch.GetTimestamp();
 
-    uint successful = 0, failed = 0;
-    double kbTransferred = 0;
+    var successful = 0u;
+    var failed = 0u;
+    var kbTransferred = 0d;
 
     using var http = new HttpClient();
 
+    var ct = cts.Token;
     while (!ct.IsCancellationRequested)
     {
         var response = await http.GetAsync(url, CancellationToken.None);

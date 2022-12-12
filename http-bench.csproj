@@ -2,21 +2,21 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net7.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <LangVersion>preview</LangVersion>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   
-    <!-- <PublishAot>true</PublishAot> -->
+    <PublishAot>true</PublishAot>
     <PublishTrimmed>true</PublishTrimmed>
-    <DebuggerSupport>false</DebuggerSupport>
-    <StaticICULinking>true</StaticICULinking>
+    <!-- <DebuggerSupport>false</DebuggerSupport> -->
+    <!-- <StaticICULinking>true</StaticICULinking> -->
     <InvariantGlobalization>true</InvariantGlobalization>
     <EnableCompressionInSingleFile>true</EnableCompressionInSingleFile>
     <IncludeAllContentForSelfExtract>true</IncludeAllContentForSelfExtract>
 
-    <IlcTrimMetadata>true</IlcTrimMetadata>
-    <IlcOptimizationPreference>Speed</IlcOptimizationPreference>
+    <!-- <IlcTrimMetadata>true</IlcTrimMetadata> -->
+    <!-- <IlcOptimizationPreference>Speed</IlcOptimizationPreference> -->
     <!-- <ILLinkTreatWarningsAsErrors>true</ILLinkTreatWarningsAsErrors> -->
   </PropertyGroup>
 
