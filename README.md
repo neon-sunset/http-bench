@@ -3,7 +3,7 @@
 - Run in console e.g. `http-bench https://example.org -p 64 -t 120`
 
 AOT version has faster startup and smaller binary, JIT has higher sustained throughput.
-Keep in mind that NativeAOT is currently unsupported on macOS (subject to change).
+Keep in mind that NativeAOT will be supported on macOS starting with .NET 8. ~~is currently unsupported on macOS (subject to change).~~
 
 ### Args
 ```sh
