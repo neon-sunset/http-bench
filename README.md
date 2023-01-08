@@ -5,7 +5,7 @@
 ~~AOT version has faster startup and smaller binary, JIT has higher sustained throughput.~~
 
 There seems to be little profit in using self-contained JIT build in .NET 8 for CLI utils.
-Threfore, `PublishAot` is set by default in .csproj but you can always remove it and build with `PublishSingleFile` and `PublishTrimmed` instead.
+Therefore, `PublishAot` is set by default in .csproj but you can always remove it and build with `PublishSingleFile` and `PublishTrimmed` instead.
 
 ### Args
 ```sh
