@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 
-if (args.Contains("--help") || args.Length is 0)
+if (args.Length is 0 || args.Contains("--help"))
 {
     Console.WriteLine("""
         args:
@@ -19,21 +19,20 @@ var workerCount = GetArg<int>("-p");
 
 using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(executionTime));
 
-var workers = (0..workerCount)
-    .AsEnumerable()
-    .Select(RunWorker);
-
 // Execute benchmark
-var reports = await Task.WhenAll(workers);
-var aggregated = reports.Aggregate(default(Report), (seed, r) => seed + r);
+var workers = (0..workerCount).Select(_ => RunWorker());
+var reports = Task.WhenAll(workers);
+Console.WriteLine($"Workers 0-{workerCount - 1} started.");
+
+var aggregated = (await reports).Aggregate(default(Report), (seed, r) => seed + r);
+Console.WriteLine($"Workers 0-{workerCount - 1} stopped.");
 
 // Print report(s)
 // Console.WriteLine(string.Join('\n', reports));
 Console.WriteLine(aggregated);
 
-async Task<Report> RunWorker(int i)
+async Task<Report> RunWorker()
 {
-    Console.WriteLine($"Starting worker {i}!");
     var timestamp = Stopwatch.GetTimestamp();
 
     var successful = 0u;
@@ -42,24 +41,27 @@ async Task<Report> RunWorker(int i)
 
     using var http = new HttpClient();
 
-    var ct = cts.Token;
-    while (!ct.IsCancellationRequested)
+    while (!cts.IsCancellationRequested)
     {
-        var response = await http.GetAsync(url, CancellationToken.None);
-        if (response.IsSuccessStatusCode)
+        try
         {
-            successful++;
+            var response = await http.GetAsync(url, cts.Token);
+            _ = response.IsSuccessStatusCode
+                ? successful++
+                : failed++;
+
             kbTransferred += (response.Content.Headers.ContentLength ?? 0D) / 1024D;
         }
-        else
+        catch (Exception)
         {
-            failed++;
+            if (!cts.IsCancellationRequested)
+            {
+                failed++;
+            }
         }
     }
 
     var seconds = Stopwatch.GetElapsedTime(timestamp).TotalSeconds;
-    Console.WriteLine($"Worker {i} stopped!");
-
     return new(
         Successful: successful,
         Failed: failed,
