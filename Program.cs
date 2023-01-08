@@ -24,7 +24,7 @@ var workers = (0..workerCount).Select(_ => RunWorker());
 var reports = Task.WhenAll(workers);
 Console.WriteLine($"Workers 0-{workerCount - 1} started.");
 
-var aggregated = (await reports).Aggregate(default(Report), (seed, r) => seed + r);
+var aggregated = (await reports).Aggregate((acc, r) => acc + r);
 Console.WriteLine($"Workers 0-{workerCount - 1} stopped.");
 
 // Print report(s)
