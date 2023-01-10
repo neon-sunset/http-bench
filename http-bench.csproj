@@ -15,7 +15,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="RangeExtensions" Version="2.1.0" />
+    <PackageReference Include="RangeExtensions" Version="2.1.1" />
   </ItemGroup>
 
 </Project>
