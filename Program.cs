@@ -15,10 +15,10 @@ if (args.Length is 0 || args.Contains("--help"))
 }
 
 var url = new Uri(args.First(arg => arg.StartsWith("http")));
-var executionTime = GetArg<uint>("-t");
-var workerCount = GetArg<int>("-p");
+var time = GetArg<uint>("-t");
+var concurrency = GetArg<int>("-c");
 
-using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(executionTime));
+using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(time));
 using var sigint = PosixSignalRegistration.Create(PosixSignal.SIGINT, ctx =>
 {
     // Cancel default handling and let '$Main' exit gracefully
@@ -27,12 +27,12 @@ using var sigint = PosixSignalRegistration.Create(PosixSignal.SIGINT, ctx =>
 });
 
 // Execute benchmark
-var workers = (0..workerCount).Select(_ => RunWorker());
+var workers = (0..concurrency).Select(_ => RunWorker());
 var reports = Task.WhenAll(workers);
-Console.WriteLine($"Workers 0-{workerCount - 1} started.");
+Console.WriteLine($"Workers 0-{concurrency - 1} started.");
 
 var aggregated = (await reports).Aggregate((acc, r) => acc + r);
-Console.WriteLine($"Workers 0-{workerCount - 1} stopped.");
+Console.WriteLine($"Workers 0-{concurrency - 1} stopped.");
 
 // Print report(s)
 // Console.WriteLine(string.Join('\n', reports.Result));
