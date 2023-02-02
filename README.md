@@ -10,7 +10,7 @@ Therefore, `PublishAot` is set by default in .csproj but you can always remove i
 ### Args
 ```sh
 url, target address
--p {num}, number of parallel workers
+-c {num}, number of concurrent workers e.g. simulated user count
 -t {secs}, execution time in seconds
 
 usage: http://address.example -c 64 -t 120
