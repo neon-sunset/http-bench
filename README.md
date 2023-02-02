@@ -1,6 +1,6 @@
 ### Run
 - Download an executable for your OS from https://github.com/neon-sunset/http-bench/releases
-- Run in console e.g. `http-bench http://address.example -p 64 -t 120`
+- Run in console e.g. `http-bench http://address.example -c 64 -t 120`
 
 ~~AOT version has faster startup and smaller binary, JIT has higher sustained throughput.~~
 
@@ -13,7 +13,7 @@ url, target address
 -p {num}, number of parallel workers
 -t {secs}, execution time in seconds
 
-usage: http://address.example -p 64 -t 120
+usage: http://address.example -c 64 -t 120
 ```
 
 ### Build
