@@ -1,14 +1,15 @@
 ﻿using System.Diagnostics;
+using System.Runtime.InteropServices;
 
 if (args.Length is 0 || args.Contains("--help"))
 {
     Console.WriteLine("""
         args:
             url, target address
-            -p {num}, number of parallel workers
+            -c {num}, number of concurrent workers e.g. simulated user count
             -t {secs}, execution time in seconds
 
-        usage: http://address.example -p 64 -t 120
+        usage: http://address.example -c 64 -t 120
         """);
     return;
 }
@@ -18,6 +19,12 @@ var executionTime = GetArg<uint>("-t");
 var workerCount = GetArg<int>("-p");
 
 using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(executionTime));
+using var sigint = PosixSignalRegistration.Create(PosixSignal.SIGINT, ctx =>
+{
+    // Cancel default handling and let '$Main' exit gracefully
+    ctx.Cancel = true;
+    cts.Cancel();
+});
 
 // Execute benchmark
 var workers = (0..workerCount).Select(_ => RunWorker());
@@ -28,7 +35,7 @@ var aggregated = (await reports).Aggregate((acc, r) => acc + r);
 Console.WriteLine($"Workers 0-{workerCount - 1} stopped.");
 
 // Print report(s)
-// Console.WriteLine(string.Join('\n', reports));
+// Console.WriteLine(string.Join('\n', reports.Result));
 Console.WriteLine(aggregated);
 
 async Task<Report> RunWorker()
