@@ -18,4 +18,4 @@ usage: http://address.example -c 64 -t 120
 
 ### Build
 - Download and install .NET 8 preview SDK from https://github.com/dotnet/installer#table
-- `make .` or `dotnet publish -c release -o publish --use-current-runtime`
+- `make` or `dotnet publish -c release -o publish --use-current-runtime`
