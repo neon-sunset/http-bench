@@ -22,6 +22,7 @@ using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(time));
 using var sigint = PosixSignalRegistration.Create(PosixSignal.SIGINT, ctx =>
 {
     // Cancel default handling and let '$Main' exit gracefully
+    Console.WriteLine("Stopping...");
     ctx.Cancel = true;
     cts.Cancel();
 });
