@@ -9,6 +9,8 @@
     <PublishAot>true</PublishAot>
     <UseSystemResourceKeys>true</UseSystemResourceKeys>
     <InvariantGlobalization>true</InvariantGlobalization>
+    <ServerGarbageCollection>true</ServerGarbageCollection>
+    <GarbageCollectionAdaptationMode>1</GarbageCollectionAdaptationMode>
 
     <OptimizationPreference>Speed</OptimizationPreference>
     <IlcTrimMetadata>true</IlcTrimMetadata>
