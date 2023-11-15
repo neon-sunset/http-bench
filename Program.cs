@@ -1,9 +1,10 @@
 ﻿using System.Diagnostics;
 using System.Runtime.InteropServices;
+using static System.Console;
 
 if (args.Length is 0 || args.Contains("--help"))
 {
-    Console.WriteLine("""
+    WriteLine("""
         args:
             url, target address
             -c {num}, number of concurrent workers e.g. simulated user count
@@ -22,22 +23,25 @@ using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(time));
 using var sigint = PosixSignalRegistration.Create(PosixSignal.SIGINT, ctx =>
 {
     // Cancel default handling and let '$Main' exit gracefully
-    Console.WriteLine("Stopping...");
+    WriteLine("Stopping...");
     ctx.Cancel = true;
     cts.Cancel();
 });
 
-// Execute benchmark
-var workers = (0..concurrency).Select(_ => RunWorker());
+// Start workers
+var workers = Enumerable
+    .Repeat(RunWorker, concurrency)
+    .Select(w => w.Invoke());
 var reports = Task.WhenAll(workers);
-Console.WriteLine($"Workers 0-{concurrency - 1} started.");
+WriteLine($"Workers 0-{concurrency - 1} started.");
 
+// Wait for all workers to finish
 var aggregated = (await reports).Aggregate((acc, r) => acc + r);
-Console.WriteLine($"Workers 0-{concurrency - 1} stopped.");
+WriteLine($"Workers 0-{concurrency - 1} stopped.");
 
 // Print report(s)
-// Console.WriteLine(string.Join('\n', reports.Result));
-Console.WriteLine(aggregated);
+// WriteLine(string.Join('\n', reports.Result));
+WriteLine(aggregated);
 
 async Task<Report> RunWorker()
 {
@@ -54,18 +58,14 @@ async Task<Report> RunWorker()
         try
         {
             var response = await http.GetAsync(url, cts.Token);
-            _ = response.IsSuccessStatusCode
-                ? successful++
-                : failed++;
+            if (response.IsSuccessStatusCode) successful++;
+            else failed++;
 
             kbTransferred += (response.Content.Headers.ContentLength ?? 0D) / 1024D;
         }
         catch (Exception)
         {
-            if (!cts.IsCancellationRequested)
-            {
-                failed++;
-            }
+            if (!cts.IsCancellationRequested) failed++;
         }
     }
 

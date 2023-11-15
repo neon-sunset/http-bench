@@ -9,13 +9,22 @@
     <PublishAot>true</PublishAot>
     <StripSymbols>true</StripSymbols>
     <DebuggerSupport>false</DebuggerSupport>
+    <UseSystemResourceKeys>true</UseSystemResourceKeys>
     <InvariantGlobalization>true</InvariantGlobalization>
-    <ServerGarbageCollection>false</ServerGarbageCollection>
-    <IlcOptimizationPreference>Speed</IlcOptimizationPreference>
+
+    <OptimizationPreference>Speed</OptimizationPreference>
+    <IlcTrimMetadata>true</IlcTrimMetadata>
+    <IlcInstructionSet>native</IlcInstructionSet>
+
+    <DistilAllMethods>true</DistilAllMethods>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="RangeExtensions" Version="2.1.1" />
+    <PackageReference Include="DistIL.OptimizerTask" Version="0.5.0-beta">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="PublishAotCompressed" Version="1.0.2" />
   </ItemGroup>
 
 </Project>
