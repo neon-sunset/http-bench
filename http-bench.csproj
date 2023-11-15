@@ -7,8 +7,6 @@
     <Nullable>enable</Nullable>
   
     <PublishAot>true</PublishAot>
-    <StripSymbols>true</StripSymbols>
-    <DebuggerSupport>false</DebuggerSupport>
     <UseSystemResourceKeys>true</UseSystemResourceKeys>
     <InvariantGlobalization>true</InvariantGlobalization>
 
